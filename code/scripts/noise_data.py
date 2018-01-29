@@ -1,33 +1,45 @@
 import os
 import random
 
+import tensorflow as tf
 import pandas as pd
 import re
+import time
 
-TRAIN_PATH = os.path.join('./data', "train.csv")
-P = 0.1
+tf.flags.DEFINE_float(
+  "noise_probability", 0.0, "Probability to replace a utterance in the context with noise")
 
-def get_list_of_utterances(dataframe):
-    utterances = []
-    for row in dataframe['Context']:
-        utterances.extend(re.split(r'__eou__ __eot__|__eou__', row)[:-1])
-    return utterances
+tf.flags.DEFINE_string(
+  "input_dir", os.path.abspath("./data"),
+  "Input directory containing original CSV data files (default = './data')")
 
+tf.flags.DEFINE_string(
+  "output_dir", os.path.abspath("./data/train"),
+  "Output directory for noisy training files (default = './data/train')")
 
-def noise_context(context, replacements):
-    context_by_utterances = re.split(r'(__eou__ __eot__|__eou__)', context)[:-1]
-    for i in range(len(context_by_utterances)-2):
-        if context_by_utterances[i] != '__eou__' and context_by_utterances[i] != '__eou__ __eot__':
-            if random.random() <= P:
-                if random.random() <= 0.1:
-                    context_by_utterances[i] = ''
-                else:
-                    context_by_utterances[i] = replacements[random.randint(0, len(replacements)-1)]
+FLAGS = tf.flags.FLAGS
+TRAIN_PATH = os.path.join(FLAGS.input_dir, "train.csv")
+P = FLAGS.noise_probability
+
 
 if __name__ == "__main__":
-    for P in [0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-        train_data = pd.read_csv(TRAIN_PATH)
-        utterances = get_list_of_utterances(train_data)
-        for row in train_data['Context']:
-            noise_context(row, utterances)
-        train_data.to_csv(os.path.join('./data', "train_p" + str(P) + ".csv"))
+    train_data = pd.read_csv(TRAIN_PATH)
+    unfolded_context = [re.split(r'(__eou__ __eot__|__eou__)', row)[:-1] for row in train_data['Context']]
+    utterances = [split for row in train_data['Context'] for split in re.split(r'__eou__ __eot__|__eou__', row)[:-1]]
+    random.shuffle(utterances)
+
+    start_time = time.time()
+    out = []
+    for row in unfolded_context:
+        out.append([utterances.pop() if
+                    x != '__eou__' and x != '__eou__ __eot__' # don't replace the delimiters
+                    and random.random() <= P != 0.0 # replace the utterances with probability P
+                    and row.index(x) != len(row)-2 # don't replace the last utterance
+                    else x
+                    for x in row])
+
+    train_data['Context'] = ["".join(x) for x in out]
+
+    if not os.path.exists(FLAGS.output_dir):
+        os.makedirs(FLAGS.output_dir)
+    train_data.to_csv(os.path.join(FLAGS.output_dir, "train.csv"), index=False)
