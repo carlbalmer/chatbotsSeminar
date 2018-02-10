@@ -15,7 +15,6 @@
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
 %% and
 %% http://www.ieee.org/
-
 %%*************************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
@@ -122,6 +121,8 @@
 
 
 
+\usepackage{xcolor}
+\newcommand\note[1]{\textcolor{red}{#1}}
 
 
 % *** GRAPHICS RELATED PACKAGES ***
@@ -405,8 +406,8 @@ Email: fuchsmat@students.unibe.ch}}
 
 \begin{abstract}
 %\boldmath
-Nowadays chatbots become more and more sophisticated conversationalists, due to recent advances in the field. Chatbots are especially popular in handling customer service tasks. However it is crucial for a bot to be able to keep the context of a conversation. The bot should be able to know wheter a person is indian or whether a person means his mother when saying "she" or his wife. 
-In this paper we give an overview over the different ways of contexts, and the current state of the art in context tracking. In the end we propose a model to keep track of the context using neural networks. We train and evaluate the network using the ubuntu dataset \footnote{\url{http://dataset.cs.mcgill.ca/ubuntu-corpus-1.0/}}.
+Nowadays chatbots become more and more sophisticated conversationalists, due to recent advances in the field. Chatbots are especially popular in handling customer service tasks. However it is crucial for a bot to be able to keep the context of a conversation.
+In this paper we give an overview over the different ways of contexts, the current state of the art in context tracking and we test a nerual network approach in an experiment, using the ubuntu dataset \footnote{\url{http://dataset.cs.mcgill.ca/ubuntu-corpus-1.0/}}.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -433,20 +434,14 @@ In this paper we give an overview over the different ways of contexts, and the c
 
 
 \section{Introduction}
-% no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.7 and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
-\hfill mds
- 
-\hfill January 11, 2007
+As the popularity of chatbots increases it becomes more important to increase their quality. This is why it is crucial for a chatbot to be able to keep track of the context. For example should the bot be able to know the nationality of the person using it or whether a person means his mother when saying "she" or his wife. 
+
+There are different types of context: The world knowledge(time, location, weather) , the user knowledge(relationships, preferences) and the dialogue context(Knowledge learned during the conversation), which is also called dialogue state. (\note{need citation here?}). In the following sections we give a brief overview over all those types. However our main focus will be on the dialogue context and the most common ways used to track it. 
 
 \section{Types of context}
-\subsection{Indian context}
-\subsection{dialogue state tracking}
+\subsection{World knowledge}
+\subsection{User knowledge}
+\subsection{Dialogue context}
 
 \section{Related work/ state of the art}
 \subsection{statistical algorithms}
