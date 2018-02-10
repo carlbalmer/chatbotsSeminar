@@ -506,12 +506,12 @@ There are two domains\cite{yan2016shall} in which a chatbot can operate in.
 
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.5]{closedOpenDomainArrow.jpg}
+   \includegraphics[scale=0.4]{closedOpenDomainArrow.jpg}
   \caption{Arrow representation of closed vs.open domain}
   \label{fig:closedOpenDomainArrow}
 \end{figure}
 
-As Figure \autoref{fig:closedOpenDomainArrow} shows, we have made the observation that for a closed domain the rule based methods work well and the more open the domain is - the harder it gets - the more deep learning is used.
+As \autoref{fig:closedOpenDomainArrow} shows, we have made the observation that for a closed domain the rule based methods work well and the more open the domain is - the harder it gets - the more deep learning is used.
 
 These are no hard borders, as most chatbots fill fall somewhere along this axis (e.g. Helpdesk ). But in general we can say that the task gets more difficult, the more open a domain is. For the closed domain we can easily use rule-based approaches and for open domain deep learning makes more sense. 
 
@@ -519,8 +519,48 @@ These are no hard borders, as most chatbots fill fall somewhere along this axis 
 
 
 \section{State of the art approaches}
+In this section we are taking a look at the most commonly used methods to keep track of context in a conversation.
 \subsection{Rule-based approaches}
+This is the most simple form of keeping track of the context. Most commercial systems use a hand-crafted approach\cite{williams2013dialog}. A fixed set of heuristics decides what to do in which situation. 
+The given input is always matched to \textbf{one} specific output state. 
+
+\begin{figure}[H]
+\centering
+   \includegraphics[scale=0.8]{ruleBasedDialogflow.jpg}
+  \caption{Example of a rule-based approach from \url{www.dialogflow.com}}
+  \label{fig:dialogFlowExample}
+\end{figure}
+
+In \autoref{fig:dialogFlowExample} we can see an example of a rule-based approach. How it works is, that if the user says something similar to "I want to hear more of them", then it recognizes the input context as "playing music" and it will start playing more music of the artist that is currently playing.
+
+Of course this whole process is impossible in an open domain, because the possible set of conversation status is infinitely and we can not create an infinite amount of hand crafted rules to match it and the rules would fail to work for unexpected utterances\cite{wallace2009anatomy}.
+
 \subsection{Probabilistic approaches}
+One of the most common and most successful approaches in this field is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden}\cite{young2010hidden}. It is a variation of the classic partially observable markov decision process(POMDP)\cite{young2013pomdp} model\cite{young2007hidden}.
+
+\note{DESCRIBE POMDP model, how muhc?}
+
+\begin{figure}[H]
+\centering
+   \includegraphics[scale=0.4]{probabilisticVsConventionalModel.jpg}
+  \caption{Conventional model vs. probabilistic POMDP model\cite{young2010hidden}.}
+  \label{fig:pomdpVsConventional}
+\end{figure}
+
+\note{Describe what pomdp vs traditional does}
+
+
+ 
+\begin{figure}[H]
+\centering
+   \includegraphics[scale=0.4]{dstChallangeProbabilistic.jpg}
+  \caption{Example of probabilistic dialogue state tracking process\cite{williams2013dialog}.}
+  \label{fig:dstChallengeProbabilistic}
+\end{figure}
+
+\note{Describe DST graph}
+
+\cite{young2010hidden}\cite{young2013pomdp}
 \subsection{Data driven approaches}
 
 \section{Ablation Study}
