@@ -559,8 +559,9 @@ The partially observable decision process is described by the following:
   \label{fig:pomdp}
 \end{figure}
 
-\note{The state $s_{t}$ is not directly observable reflecting the uncertainty in the interpratetion of user utterances; instead, at each turn, the system regards the output of the SLU as a noisy observation $o_{t}$ of the user input with probability $p(o_{t}|s_{t})$. The transition and observation probability functions are represented by a suitable stochastic model, called here the dialog model M. The decision as to which action to take at each turn is determined by a second stochastic model encoding the policy P. As the dialog progresses, a reward is assigned at each step designed to mirror the desired charactersitics of the dialog system\cite{young2013pomdp}.}
+Because state $s_{t}$ is not directly observable at each turn, the system regards the output of the SLU as a noisy observation $o_{t}$ of the user input with the probability $p(o_{t}|s_{t})$. $T(s_{i},a,s_{j})$ and $O(z_{i},a,s_{j})$ are represented by the suitable stochastic dialog model M. The decision process which determines which action to execute depends on a second stochastic model which encodes the policy P. Further into the dialogue, the reward R is assigned at each step. The intention is that it mirrors the characteristics of the dialogue system\cite{young2013pomdp}.
 
+\paragraph{}
 
 
 \begin{figure}[H]
@@ -570,13 +571,8 @@ The partially observable decision process is described by the following:
   \label{fig:pomdpVsConventional}
 \end{figure}
 
-In \autoref{fig:pomdpVsConventional} we can see two different structures of a spoken dialogue system. In (a) we see a conventional one and in (b) a probabilistic one. $a_{u}$ and $a_{m}$ denote user and machine dialogue acts, $s_{u}$ is the user goal and $s_{d}$ is the dialogue history. The tilde indicates an estimate.
+In \autoref{fig:pomdpVsConventional} we can see two different structures of a spoken dialogue system. In (a) we see a conventional rule-based one and in (b) a probabilistic one. $a_{u}$ and $a_{m}$ denote user and machine dialogue acts, $s_{u}$ is the user goal and $s_{d}$ is the dialogue history. The tilde indicates an estimate.
 The conventional dialogue manager in part (a) only holds the estimate of one single state, whereas the probabilistic manager in part (b) represents a dialogue manager which maintains a distribution over all states and accepts an N-best list of alternative user inputs\cite{young2010hidden}.  
-
-
-
-
-\note{Describe what pomdp vs traditional does}
 
 
  
