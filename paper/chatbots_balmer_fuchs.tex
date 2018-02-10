@@ -103,6 +103,7 @@
 % *** CITATION PACKAGES ***
 %
 \usepackage{cite}
+\usepackage{amssymb}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of IEEE. Loading the cite package will
@@ -171,7 +172,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -536,18 +537,29 @@ In \autoref{fig:dialogFlowExample} we can see an example of a rule-based approac
 Of course this whole process is impossible in an open domain, because the possible set of conversation status is infinitely and we can not create an infinite amount of hand crafted rules to match it and the rules would fail to work for unexpected utterances\cite{wallace2009anatomy}.
 
 \subsection{Probabilistic approaches}
-One of the most common and most successful approaches in this field is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden}\cite{young2010hidden}. It is a variation of the classic partially observable markov decision process(POMDP)\cite{young2013pomdp} model\cite{young2007hidden}.
+One of the most common and most successful approaches in this field is using a partially observable markov decision process(POMDP)\cite{kaelbling1998planning}\cite{young2013pomdp} dialogue state model. The most successful is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden}\cite{young2010hidden}, which is based on POMDP.
 
+\subsubsection{POMDP}
+
+The partially observable decision process is described by the following:
+\begin{itemize}
+\item{a set of states $S=\left \{ s_{1},s_{2},....s_{|S|}  \right \}$}
+\item{a set of actions $A=\left \{ a_{1},a_{2},....a_{|A|}  \right \}$}
+\item{a set of transition probabilities $T(s_{i},a,s_{j})=p(s_{j}|s_{i},a)$}
+\item{a set of observation probabilities $O(z_{i},a,s_{j})=p(z_{i}|s_{j},a)$}
+\item{a set of rewards $R:S\times A\rightarrow \mathbb{R}$}
+\item{a discount factor $\gamma \in \left [ 0,1 \right ]$}
+\item{an initial belief $p_{0}(s)$}
+\end{itemize}
 
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.4]{probabilisticVsConventionalModel.jpg}
-  \caption{Partially observable markov decision process (POMDP) based spoken dialogue system.}
-  \label{fig:pomdpVsConventional}
+   \includegraphics[scale=0.7]{pomdp.jpg}
+  \caption{Partially observable markov decision process (POMDP) based spoken dialogue system.\cite{young2013pomdp} }
+  \label{fig:pomdp}
 \end{figure}
 
-\note{DESCRIBE POMDP model, how muhc?}
-\note{This approach assumes that dialogue evolves as a Markov process, i.e., starting in some initial state $s_{0}$, each subsequent state is modeled by a transition probability: $p(s_{t}|s_{t-1}, a_{t-1})$. The state $s_{t}$ is not directly observable reflecting the uncertainty in the interpratetion of user utterances; instead, at each turn, the system regards the output of the SLU as a noisy observation $o_{t}$ of the user input with probability $p(o_{t}|s_{t})$. The transition and observation probability functions are represented by a suitable stochastic model, called here the dialog model M. The decision as to which action to take at each turn is determined by a second stochastic model encoding the policy P. As the dialog progresses, a reward is assigned at each step designed to mirror the desired charactersitics of the dialog system. The dialog model M and the policy model P can then be optimized by maximizing the expected accumulated sum of these rewards either online through interaction with users or offline from a corpus of dialogs collected within a similar domain.}
+\note{The state $s_{t}$ is not directly observable reflecting the uncertainty in the interpratetion of user utterances; instead, at each turn, the system regards the output of the SLU as a noisy observation $o_{t}$ of the user input with probability $p(o_{t}|s_{t})$. The transition and observation probability functions are represented by a suitable stochastic model, called here the dialog model M. The decision as to which action to take at each turn is determined by a second stochastic model encoding the policy P. As the dialog progresses, a reward is assigned at each step designed to mirror the desired charactersitics of the dialog system\cite{young2013pomdp}.}
 
 
 
@@ -557,6 +569,12 @@ One of the most common and most successful approaches in this field is the hidde
   \caption{Conventional model vs. probabilistic POMDP model\cite{young2010hidden}.}
   \label{fig:pomdpVsConventional}
 \end{figure}
+
+In \autoref{fig:pomdpVsConventional} we can see two different structures of a spoken dialogue system. In (a) we see a conventional one and in (b) a probabilistic one. $a_{u}$ and $a_{m}$ denote user and machine dialogue acts, $s_{u}$ is the user goal and $s_{d}$ is the dialogue history. The tilde indicates an estimate.
+The conventional dialogue manager in part (a) only holds the estimate of one single state, whereas the probabilistic manager in part (b) represents a dialogue manager which maintains a distribution over all states and accepts an N-best list of alternative user inputs\cite{young2010hidden}.  
+
+
+
 
 \note{Describe what pomdp vs traditional does}
 
