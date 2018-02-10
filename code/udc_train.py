@@ -58,7 +58,7 @@ def main(unused_argv):
         every_n_steps=FLAGS.eval_every,
         metrics=eval_metrics)
 
-  estimator.fit(input_fn=input_fn_train, steps=None, monitors=[eval_monitor])
+  estimator.fit(input_fn=input_fn_train, steps=None, monitors=[eval_monitor], max_steps=FLAGS.num_epochs)
 
 if __name__ == "__main__":
   tf.app.run()
