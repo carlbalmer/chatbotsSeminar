@@ -507,7 +507,7 @@ There are two domains\cite{yan2016shall} in which a chatbot can operate in.
 
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.4]{closedOpenDomainArrow.jpg}
+   \includegraphics[width=\linewidth]{closedOpenDomainArrow.jpg}
   \caption{Arrow representation of closed vs.open domain}
   \label{fig:closedOpenDomainArrow}
 \end{figure}
@@ -527,7 +527,7 @@ The given input is always matched to \textbf{one} specific output state.
 
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.8]{ruleBasedDialogflow.jpg}
+   \includegraphics[width=\linewidth]{ruleBasedDialogflow.jpg}
   \caption{Example of a rule-based approach from \url{www.dialogflow.com}}
   \label{fig:dialogFlowExample}
 \end{figure}
@@ -554,7 +554,7 @@ The partially observable decision process is described by the following:
 
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.7]{pomdp.jpg}
+   \includegraphics[width=\linewidth]{pomdp.jpg}
   \caption{Partially observable markov decision process (POMDP) based spoken dialogue system.\cite{young2013pomdp} }
   \label{fig:pomdp}
 \end{figure}
@@ -566,7 +566,7 @@ Because state $s_{t}$ is not directly observable at each turn, the system regard
 
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.4]{probabilisticVsConventionalModel.jpg}
+   \includegraphics[width=\linewidth]{probabilisticVsConventionalModel.jpg}
   \caption{Conventional model vs. probabilistic POMDP model\cite{young2010hidden}.}
   \label{fig:pomdpVsConventional}
 \end{figure}
@@ -578,7 +578,7 @@ The conventional dialogue manager in part (a) only holds the estimate of one sin
  
 \begin{figure}[H]
 \centering
-   \includegraphics[scale=0.4]{dstChallangeProbabilistic.jpg}
+   \includegraphics[width=\linewidth]{dstChallangeProbabilistic.jpg}
   \caption{Example of probabilistic dialogue state tracking process\cite{williams2013dialog}.}
   \label{fig:dstChallengeProbabilistic}
 \end{figure}
@@ -587,6 +587,36 @@ The conventional dialogue manager in part (a) only holds the estimate of one sin
 
 \cite{young2010hidden}\cite{young2013pomdp}
 \subsection{Data driven approaches}
+In a open domain it quickly becomes impossible to define all possible states and state transition. It is therefore not possible to handcraft a system which solves the context state tracking problem\cite{radlinski2017theoretical}.
+
+But with the rise of big data and the large amount of conversations happening on the web, we can use data driven approaches to circumvent this problem. Instead of handcrafting a the mapping from context to response, we can learn this mapping from the data.
+
+In general there are two conrasting data driven approaches; \emph{Discriminative and Generative}.Most produnction systems today use the disctiminative approach, but the research focus is mostly on the generative approach. For both approaches there are statistical and deep learning methods available\cite{yan2016shall}.
+
+\subsubsection{Discriminative methods}
+The discriminative approach is to have a (very) large database of predefined responses and then pick the most appropriate one based on the context. This basicly reduces the task to a retreval problem akin to search engines (retreaving results based on a querry).
+
+Most discriminative methods use the data to learn a ranking function. This function is then used to score all possoble responses. The best scoring response is given as an answer to the user.\cite{yan2016shall}
+
+This methods have the advantage that they do not make grammatical or semantical errors (because the predefined responses were weitten by humans). But they can't handle unseen cases or refer back to contextal entities (e.g. names).
+
+An example for a statistical method ist \emph{Okapi BM25}\cite{manning2008introduction}. A search engine ranking function based on "bag-of-words" retreaval.
+
+Is is also possible to train an artificial neural network to score replies\cite{yan2016shall,lowe2015ubuntu}. This method is further explained in section \note{insert section}, as we further investigate this method in our ablation study.
+
+\subsubsection{Generative methods}
+Generative methods do not use predefined responses. They generate new responses from scratch. To do this they use approaches from machine translation. But instead of translating form one language to another they translate from context to response.
+
+This has the benefit that it is possible to refer back to enteties in the imput. But these methods often makes grammatical mistakes and are hard to train. They tend to default to "save" answers like "I dont know" or even "I love you".\
+
+There are some methods from statistical machine translation, which basicly try to match the phrase probability distribution in both “languages”. But the research focus lies on deep learning methods like the RNN Encoder-Decoder Networt\cite{sutskever2014sequence}. It uses one network to encode the context into a vector and another to decode the network into the response.
+
+\begin{figure}[H]
+\centering
+   \includegraphics[width=\linewidth]{sequence_to_sequence.png}
+  \caption{The dual encoder model form the sequence to sequence paper\cite{sutskever2014sequence}}
+  \label{fig:dstChallengeProbabilistic}
+\end{figure}
 
 \section{Ablation Study}
 \subsection{Goal}
