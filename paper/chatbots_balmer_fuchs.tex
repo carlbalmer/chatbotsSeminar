@@ -573,6 +573,31 @@ One of the most common and most successful approaches in this field is the hidde
 
 \cite{young2010hidden}\cite{young2013pomdp}
 \subsection{Data driven approaches}
+In a open domain it quickly becomes impossible to define all possible states and state transition. It is therefore not possible to handcraft a system which solves the context state tracking problem.
+
+But with the rise of big data and the large amount of conversations happening on the web, we can use data driven approaches to circumvent this problem. Instead of handcrafting a the mapping from context to response, we can learn this mapping from the data. \note{reference to formal definition}
+
+In general there are two conrasting data driven approaches; \emph{Discriminative and Generative}.Most produnction systems today use the disctiminative approach, but the research focus is mostly on the generative approach. For both approaches there are statistical and deep learning methods available.
+
+\subsubsection{Discriminative methods}
+The discriminative approach is to have a (very) large database of predefined responses and then pick the most appropriate one based on the context. This basicly reduces the task to a retreval problem akin to search engines (retreaving results based on a querry).
+
+Most discriminative methods use the data to learn a ranking function. This function is then used to score all possoble responses. The best scoring response is given as an answer to the user.
+
+This methods have the advantage that they do not make grammatical or semantical errors (because the predefined responses were weitten by humans). But they can't handle unseen cases or refer back to contextal entities (e.g. names).
+
+An example for a statistical method ist \emph{Okapi BM25}. A search engine ranking function based on "bag-of-words" retreaval.
+
+Is is also possible to train an artificial neural network to score replies. This method is further explained in section \note{insert section}, as we further investigate this method in our ablation study.
+
+\subsubsection{Generative methods}
+Generative methods do not use predefined responses. They generate new responses from scratch. To do this they use approaches from machine translation. But instead of translating form one language to another they translate from context to response.
+
+This has the benefit that it is possible to refer back to enteties in the imput. But these methods often makes grammatical mistakes and are hard to train. They tend to default to "save" answers like "I dont know" or even "I love you".
+
+There are some methods from statistical machine translation, which basicly try to match the phrase probability distribution in both “languages”. But the research focus lies on deep learning methods like the RNN Encoder-Decoder Networt. It uses one network to encode the context into a vector and another to decode the network into the response. \note{add image}.
+
+
 
 \section{Ablation Study}
 \subsection{Goal}
