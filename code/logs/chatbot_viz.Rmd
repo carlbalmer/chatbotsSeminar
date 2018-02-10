@@ -42,4 +42,3 @@ ggplot(data = max_acc) +
   geom_line(mapping = aes(x = case, y = max_acc), colour="blue")
   
 ```
-
