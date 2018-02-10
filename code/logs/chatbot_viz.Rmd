@@ -1,0 +1,45 @@
+---
+title: "Chatbots Visualization"
+output: html_notebook
+---
+
+Loading data and getting and tidying up.
+
+```{r}
+files <- list.files(path=".", pattern="*.txt", full.names=T, recursive=FALSE)
+list <- c()
+list <- lapply(files, name <- function(x) {
+   i <- list
+  log <- tibble(x = read_lines(x)) %>% filter_all(any_vars(str_detect(., "INFO:tensorflow:Saving evaluation summary")))
+  list <- c(i, log)
+})
+validation = bind_cols(list) %>%
+  rename("0.1" = x, "0.2" = x1, "0.3" = x2, "0.4" = x3, "0.5" = x4, "0.6" = x5, "0.7" = x6, "0.8" = x7, "0.9" = x8, "1" = x9, "0.0" = x10) %>%
+  gather(case, value) %>%
+  separate(value, into = c("info", "tf", "step", "losses"), sep = ":") %>%
+  select(-info, -tf) %>%
+  separate(losses, into = c("loss", "recall_at_1", "recall_at_10", "recall_at_2", "recall_at_5"), sep = ",") %>%
+  separate_rows( -step, -case, sep = " = ") %>%
+  filter(loss != " loss") %>%
+  mutate_at(c("case" ,"step", "loss", "recall_at_1", "recall_at_10", "recall_at_2", "recall_at_5"),parse_number)
+validation
+```
+
+```{r}
+ggplot(data = validation) + 
+  geom_line(mapping = aes(x = step, y = recall_at_1, colour = factor(case)))
+```
+
+
+
+```{r}
+max_acc <- validation %>%
+  group_by(case) %>%
+  summarise(max_acc = max(recall_at_1))
+
+ggplot(data = max_acc) + 
+  geom_col(mapping = aes(x = case, y = max_acc)) +
+  geom_line(mapping = aes(x = case, y = max_acc), colour="blue")
+  
+```
+
