@@ -455,8 +455,14 @@ Depending on which domain we are in, different approaches are more suited. There
 \end{itemize}
 
 \section{Types of context}
-\subsection{World knowledge}
-\subsection{User knowledge}
+\subsection{World knowledge and User knowledge}
+In order to be fully operable, a bot should always know the location, the time, the weather etc. of where the user is. Because what good is the chatbot if he only proposes restaurants that are in Australia, when the user is living in Switzerland? Or if the user asks about the local weather, he gets the weather in India. We called this knowledge "World knowledge".
+The bot should also know about the personal preferences, relationships, schedules etc. of the user. We called this knowledge "User knowledge".
+The cultural differences can also be huge. For example it has been found that Indians take a lot of time to articulate their intent and therefore prefer typing over talking\citep{chopra2017my}.
+
+Hence it is of great importance for a conversational agent to take into account the surroundings of the user, in order to be able to give appropriate answers.
+
+
 \subsection{Dialogue context}
 Dialogue context, also called dialogue state, represents the challenge of keeping track of the intent of the user and the knowledge learned during the conversation. For example: 
 
