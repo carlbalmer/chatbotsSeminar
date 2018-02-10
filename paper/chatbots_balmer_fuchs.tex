@@ -538,7 +538,18 @@ Of course this whole process is impossible in an open domain, because the possib
 \subsection{Probabilistic approaches}
 One of the most common and most successful approaches in this field is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden}\cite{young2010hidden}. It is a variation of the classic partially observable markov decision process(POMDP)\cite{young2013pomdp} model\cite{young2007hidden}.
 
+
+\begin{figure}[H]
+\centering
+   \includegraphics[scale=0.4]{probabilisticVsConventionalModel.jpg}
+  \caption{Partially observable markov decision process (POMDP) based spoken dialogue system.}
+  \label{fig:pomdpVsConventional}
+\end{figure}
+
 \note{DESCRIBE POMDP model, how muhc?}
+\note{This approach assumes that dialogue evolves as a Markov process, i.e., starting in some initial state $s_{0}$, each subsequent state is modeled by a transition probability: $p(s_{t}|s_{t-1}, a_{t-1})$. The state $s_{t}$ is not directly observable reflecting the uncertainty in the interpratetion of user utterances; instead, at each turn, the system regards the output of the SLU as a noisy observation $o_{t}$ of the user input with probability $p(o_{t}|s_{t})$. The transition and observation probability functions are represented by a suitable stochastic model, called here the dialog model M. The decision as to which action to take at each turn is determined by a second stochastic model encoding the policy P. As the dialog progresses, a reward is assigned at each step designed to mirror the desired charactersitics of the dialog system. The dialog model M and the policy model P can then be optimized by maximizing the expected accumulated sum of these rewards either online through interaction with users or offline from a corpus of dialogs collected within a similar domain.}
+
+
 
 \begin{figure}[H]
 \centering
