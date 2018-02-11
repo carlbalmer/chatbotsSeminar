@@ -411,7 +411,7 @@ Email: fuchsmat@students.unibe.ch}}
 \begin{abstract}
 %\boldmath
 Nowadays chatbots (in the following: conversational agent/ agent) become more and more sophisticated conversationalists, due to recent advances in the field. conversational agents are especially popular in handling customer service tasks. However it is crucial for an conversational agent to be able to keep the context of a conversation.
-In this paper we first give an overview over the different types of contexts and the current state of the art in context tracking. Finally we test a nerual network approach \note{carl do fancy formulierig} in an experiment, using the ubuntu dataset \footnote{\url{http://dataset.cs.mcgill.ca/ubuntu-corpus-1.0/}}. We train the network with a different amount of context in various runs and analyse the differences in recall.
+In this paper we first give an overview over the different types of contexts and the current state of the art in context tracking. Finally we test a nerual network approach \note{carl do fancy formulierig} in an experiment, using the ubuntu dataset\cite{lowe2015ubuntu}. We train the network with a different amount of context in various runs and analyse the differences in recall.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -442,14 +442,14 @@ As the popularity of conversational agents increases it becomes more important t
 \begin{itemize}
 \item{The world knowledge (time, location, weather). Example: The agent should know the local time of the user, to be able to provide opening times of shops.}
 \item{The user knowledge (relationships, preferences). Example: The agent should know whether a person is referring to his mother or his wife, when he is using the word "she". }
-\item{The dialogue context or dialogue state tracking (Knowledge learned during the conversation)}.
+\item{The dialogue context or dialogue state tracking (knowledge learned during the conversation).}
 \end{itemize}
 
 The main focus of this paper will be on keeping track of the dialogue context.
 
-Conversational agents operate on a spectrum between two different domains: \emph{Open domain} (No clear responsibility, open conversations) and \emph{Closed domain} (Specific task to fulfil, limited set of options). 
-Depending on which domain we are in, different approaches are more suited to use. The most common approaches we encountered are 
-\emph{Rule-based approaches}, \emph{Probabilistic approaches} and \emph{Data driven approaches}.
+Conversational agents operate on a spectrum between two different domains: \emph{Open domain} (no clear responsibility/ purpose\cite{klopfenstein2017rise}, open conversations) and \emph{Closed domain} (specific task to fulfil, limited set of options). 
+Depending on the domain in which the conversational agent operates, certain methods are better suited than others. The approaches we are going to describe in this paper are the
+\emph{Rule-based approaches}, the \emph{Probabilistic approaches} and the \emph{Data driven approaches}.
 
 In the following sections we are going to give a quick overview over the different types of context, the different domains of operation and the respective approaches used in those domains.
 
@@ -505,10 +505,10 @@ The hard thing is to track all of the information and notice changes in the user
 \subsection{Closed vs. open domain}
 Before we talk about different approaches and methods to tackle this problem, we quickly have to mention the importance of domain "size" because this greatly influences the feasibility and effectiveness of different methods.
 
-There are two domains\cite{yan2016shall} in which a conversational agent can operate in.
+There are two domains\cite{yan2016shall} between which a conversational agent operates:
 \begin{itemize}
 \item{\textbf{Closed domain}: The agent has one specific, well defined task it has to perform e.g. music player, restaurant finder. The advantage here is, that all the possible actions are finite and known in advance\cite{radlinski2017theoretical} (e.g. there is a finite number of Italian restaurants in a certain area). This means that it would for example be possible to model the agent as a set of states with transitions. Rule-based and probabilistic approaches are better suited/ most widely used in a closed domain.}
-\item{\textbf{Open domain}: The conversational agent has no specific task. In the most extreme case it is completely open, which means that it has to converse with anyone about anything. This makes it impossible to model a set of possible states beforehand. In this domain data-driven approaches are most widely used.}
+\item{\textbf{Open domain}: The conversational agent has no specific task. In the most extreme case it is completely open, which means that it has to converse with anyone about anything. This kind of conversational agents are currently on the rise in the form of virtual private 	assistants (e.g. google assistant, amazon alexa etc.)\cite{klopfenstein2017rise}. With those kind of agents it is impossible to model a set of possible states beforehand. In this domain data-driven approaches are most widely used.}
 \end{itemize}
 
 \begin{figure}[H]
@@ -520,7 +520,7 @@ There are two domains\cite{yan2016shall} in which a conversational agent can ope
 
 As \autoref{fig:closedOpenDomainArrow} shows, we have made the observation that for a closed domain the rule based methods work well and the more open the domain is - the harder it gets - the more deep learning is used.
 
-These are no hard borders, as most conversational agents fall somewhere along this axis (E.g. a help desk agent. It is not operating in a completely closed domain, as it has to offer solutions for a broad set of problems). But in general we can say that the task gets more difficult, the more open a domain is. For the closed domain we can easily use rule-based approaches. For open domains deep learning makes more sense. 
+These are no hard borders, as most conversational agents fall somewhere along this axis (e.g. a help desk agent. It is not operating in a completely closed domain, as it has to offer solutions for a broad set of problems). But in general we can say that the task gets more difficult, the more open a domain is. For the closed domain we can easily use rule-based approaches. For open domains deep learning makes more sense. 
 
 
 
@@ -543,7 +543,7 @@ In \autoref{fig:dialogFlowExample} we can see an example of a rule-based approac
 Of course this whole process is impossible in an open domain, because the possible set of conversation status is infinitely and we can not create an infinite amount of hand crafted rules to match it and the rules would fail to work for unexpected utterances\cite{wallace2009anatomy}.
 
 \subsection{Probabilistic approaches}
-One of the most common and most successful approaches in this field is using a partially observable markov decision process(POMDP)\cite{kaelbling1998planning}\cite{young2013pomdp} dialogue state model. The most successful is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden}\cite{young2010hidden}, which is based on a POMDP.
+One of the most common and most successful approaches in this field is using a partially observable markov decision process (POMDP)\cite{kaelbling1998planning,young2013pomdp} dialogue state model. The most successful is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden,young2010hidden}, which is based on a POMDP.
 
 \subsubsection{POMDP}
 The partially observable decision process is described by the following:
@@ -569,7 +569,7 @@ Because the state $s_{t}$ is not observable and thus is not known exactly, a dis
 Based on the current belief state \textbf{b} an action $a_{t}$ is selected and the system receives  a reward R and transitions to a new state $s'_{t}$, which is also unobserved. The system then receives an observation o' which depends on $s'_{t}$ and $a_{t}$. After this the belief \textbf{b} is updated\cite{young2007hidden,young2013pomdp}.
 
 
-The HIS model refines the way the belief monitoring works. Only a N-best list of beliefs is kept. There is also always a "Rest" value kept in the N-best list (See \autoref{fig:dstChallengeProbabilistic})\cite{young2007hidden}.
+The HIS model refines the way the belief monitoring works. Only a N-best list of beliefs is kept. There is also always a "Rest" value kept in the N-best list (see \autoref{fig:dstChallengeProbabilistic})\cite{young2007hidden}.
 
 \begin{figure}[H]
 \centering
@@ -631,6 +631,11 @@ There are some methods from statistical machine translation, which basicly try t
 \subsection{Methology}
 \subsection{Results}
 
+\section{Conclusion}
+Overall we can say that probabilistic models are very well suited to keep track of the dialogue context in conversational agents that operate in a more closed domain. However with a more open domain, data driven approaches are better suited. 
+With the increasing amount of available data, those approaches become steadily more valid and more accurate.
+
+In our ablation study we found that it is important to train a neural network with context. If we remove the context from the training data, the accuracy decreases. \note{carl rephrase}
 
 
 
@@ -716,22 +721,6 @@ There are some methods from statistical machine translation, which basicly try t
 % exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
 % footnotes above bottom floats. This can be corrected via the \fnbelowfloat
 % command of the stfloats package.
-
-
-
-\section{Conclusion}
-The conclusion goes here.\cite{chopra2017my}
-
-
-
-
-% conference papers do not normally have an appendix
-
-
-% use section* for acknowledgement
-
-
-
 
 
 % trigger a \newpage just before the given reference
