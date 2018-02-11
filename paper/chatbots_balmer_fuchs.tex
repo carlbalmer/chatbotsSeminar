@@ -559,9 +559,22 @@ The partially observable decision process is described by the following:
   \label{fig:pomdp}
 \end{figure}
 
-Because state $s_{t}$ is not directly observable at each turn, the system regards the output of the SLU as a noisy observation $o_{t}$ of the user input with the probability $p(o_{t}|s_{t})$. $T(s_{i},a,s_{j})$ and $O(z_{i},a,s_{j})$ are represented by the suitable stochastic dialog model M. The decision process which determines which action to execute depends on a second stochastic model which encodes the policy P. Further into the dialogue, the reward R is assigned at each step. The intention is that it mirrors the characteristics of the dialogue system\cite{young2013pomdp}.
 
-\paragraph{}
+Because state $s_{t}$ is not observable and thus is not known exactly, a distribution over all possible states is kept. This distribution is called the belief state. So the probability of being in state $s_{t}$, given the belief state \textbf{b} is b($s_{t}$)\cite{young2007hidden}. 
+Based on the current belief state \textbf{b} an action $a_{t}$ is selected and the system receives  a reward R and transitions to a new state $s'_{t}$, which is also unobserved. The system then receives an observation o' which depends on $s'_{t}$ and $a_{t}$. After this the belief b is updated\cite{young2007hidden,young2013pomdp}.
+
+
+The HIS model refines the way the belief monitoring works. A N-best list of beliefs is kept. There is also always a "Rest" value kept in the N-best list (See \autoref{fig:dstChallengeProbabilistic})\cite{young2007hidden}.
+
+\begin{figure}[H]
+\centering
+   \includegraphics[width=\linewidth]{dstChallangeProbabilistic.jpg}
+  \caption{Example of probabilistic dialogue state tracking process\cite{williams2013dialog}.}
+  \label{fig:dstChallengeProbabilistic}
+\end{figure}
+
+In \autoref{fig:dstChallengeProbabilistic} we can see a nice example of how a probabilistic model works. The example is taken from the dialogue state tracking challenge\cite{williams2013dialog}. We have given a set of states and their possible output hypotheses.
+After the user gives the input, the most probable hypothesis is chosen based on the given start probabilities. In the example after the first input, no decision can be made. So the system asks the user for clarification. The probabilities get updated based on the last input and now the correct answer can be given to the user with the updated probabilities. 
 
 
 \begin{figure}[H]
@@ -574,18 +587,6 @@ Because state $s_{t}$ is not directly observable at each turn, the system regard
 In \autoref{fig:pomdpVsConventional} we can see two different structures of a spoken dialogue system. In (a) we see a conventional rule-based one and in (b) a probabilistic one. $a_{u}$ and $a_{m}$ denote user and machine dialogue acts, $s_{u}$ is the user goal and $s_{d}$ is the dialogue history. The tilde indicates an estimate.
 The conventional dialogue manager in part (a) only holds the estimate of one single state, whereas the probabilistic manager in part (b) represents a dialogue manager which maintains a distribution over all states and accepts an N-best list of alternative user inputs\cite{young2010hidden}.  
 
-
- 
-\begin{figure}[H]
-\centering
-   \includegraphics[width=\linewidth]{dstChallangeProbabilistic.jpg}
-  \caption{Example of probabilistic dialogue state tracking process\cite{williams2013dialog}.}
-  \label{fig:dstChallengeProbabilistic}
-\end{figure}
-
-\note{Describe DST graph}
-
-\cite{young2010hidden}\cite{young2013pomdp}
 \subsection{Data driven approaches}
 In a open domain it quickly becomes impossible to define all possible states and state transition. It is therefore not possible to handcraft a system which solves the context state tracking problem\cite{radlinski2017theoretical}.
 
