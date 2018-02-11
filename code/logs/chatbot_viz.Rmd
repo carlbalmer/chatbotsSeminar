@@ -27,7 +27,10 @@ validation
 
 ```{r}
 ggplot(data = validation) + 
-  geom_line(mapping = aes(x = step, y = recall_at_1, colour = factor(case)))
+  geom_line(mapping = aes(x = step, y = recall_at_1, colour = factor(case)), size = 1) +
+  scale_color_manual(values = colorRampPalette(c( "#08519C","#EFF3FF"))(11)) +
+  theme(panel.background = element_rect(fill = "tan1")) +
+  labs(x = "Training Epochs", y = "Accuracy", color = "")
 ```
 
 
@@ -37,8 +40,26 @@ max_acc <- validation %>%
   group_by(case) %>%
   summarise(max_acc = max(recall_at_1))
 
-ggplot(data = max_acc) + 
-  geom_col(mapping = aes(x = case, y = max_acc)) +
-  geom_line(mapping = aes(x = case, y = max_acc), colour="blue")
-  
+ggplot(data = max_acc, aes(x = case, y = max_acc, fill = case)) +
+  geom_col() +
+  scale_fill_distiller(palette = "Blues")  +
+  labs(x = "Noise probability P", y = "Testing Accuracy", fill = "") +
+  theme(panel.background = element_rect(fill = "tan1"))
 ```
+
+
+```{r}
+colourCount <- length(unique(mtcars$hp)) # number of levels
+getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
+brewer.pal(11, "Blues")
+## Now you can draw your 15 different factors
+g <- ggplot(validation) 
+g <- g +  geom_line(aes(x = step, y = recall_at_1, colour = factor(case))) 
+g <- g +  scale_color_manual(values = colorRampPalette(c("#F7FBFF", "#08306B"), alpha = TRUE)(11)) 
+g <- g + theme(legend.position="top")
+g <- g + xlab("X axis name") + ylab("Frequency (%)")
+g
+brewer.pal(name ="Blues", n=5)
+distiller.pal()
+```
+

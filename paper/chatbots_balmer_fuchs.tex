@@ -447,9 +447,9 @@ As the popularity of conversational agents increases it becomes more important t
 
 The main focus of this paper will be on keeping track of the dialogue context.
 
-Conversational agents operate on a spectrum between two different domains: \emph{Open domain} (No clear responsibility, open conversations) and \emph{Closed domain} (Specific task to fulfil, limited set of options). 
-Depending on which domain we are in, different approaches are more suited to use. The most common approaches we encountered are 
-\emph{Rule-based approaches}, \emph{Probabilistic approaches} and \emph{Data driven approaches}.
+Conversational agents operate on a spectrum between two different domains: \emph{Open domain} (no clear responsibility/ purpose\cite{klopfenstein2017rise}, open conversations) and \emph{Closed domain} (specific task to fulfil, limited set of options). 
+Depending on the domain in which the conversational agent operates, certain methods are better suited than others. The approaches we are going to describe in this paper are the
+\emph{Rule-based approaches}, the \emph{Probabilistic approaches} and the \emph{Data driven approaches}.
 
 In the following sections we are going to give a quick overview over the different types of context, the different domains of operation and the respective approaches used in those domains.
 
@@ -471,17 +471,17 @@ The cultural differences can also be huge. For example it has been found that In
 
 
 \subsection{Dialogue context}
-Dialogue context, also called dialogue state, represents the challenge of keeping track of the intent of the user and the knowledge learned during the conversation. For example: 
+Dialogue context, also called dialogue state, represents the challenge of keeping track of the intent of the user and the knowledge learned during a specific the conversation. For example: 
 
 \begin{itemize}
-\item[]{\textbf{U1:} Person: I would like to see the best italian restaurant}
-\item[]{\textbf{U2:} Conversational Agent:  Hey, it is "luigis pizza". Would you like to make a reservation?}
+\item[]{\textbf{U1:} Person: I would like to see the best Italian restaurant}
+\item[]{\textbf{U2:} Conversational Agent:  Hey, it is "Luigi's pizza". Would you like to make a reservation?}
 \item[]{\textbf{U3:} Person: No, please show me Chinese restaurants}
 \item[]{\textbf{U4:} Conversational Agent: We have "Restaurant A", "Restaurant B" and "Restaurant C" which are close. Which one do you like?}
 \item[]{\textbf{U5:} Person: Ok I've changed my mind. Make a reservation at the Italian place}
 \end{itemize}
 In the above example the conversational agent needs to know what the user means in U5 by "the Italian place". It has to realize that the user is referring to the Italian restaurant mentioned in U2. 
-Depending on how far back the context goes, it can be hard to track. Often the chatbot needs to ask again what the user means, because it did not understand.
+Depending on how far back the context goes, it can be hard to track. Often the agent needs to ask again what the user means, because it did not understand.
 
 \section{The context tracking Problem}
 We can define the general case of the problem as follows:
@@ -490,8 +490,8 @@ $[u_{1},a_{2},u_{3},a_{4},u_{5},...,u_{t}] \rightarrow a_{t+1} $
 
 Where
 \begin{itemize}
-\item{ $u_{i}$ are the user actions which consist of stating an intent, give information, provide feedback to agent answers or change the intent or the given information.}
-\item{$a_{j}$ are the agent actions which consist of requesting more information, give appropriate responses and request feedback.}
+\item{ $u_{t}$ are the user actions which consist of stating an intent, give information, provide feedback to agent answers or change the intent or the given information.}
+\item{$a_{t}$ are the agent actions which consist of requesting more information, give appropriate responses and request feedback.}
 \end{itemize}
 In this case the agent decides for the appropriate response based on \textbf{all} previous utterances.
 
@@ -505,22 +505,22 @@ The hard thing is to track all of the information and notice changes in the user
 \subsection{Closed vs. open domain}
 Before we talk about different approaches and methods to tackle this problem, we quickly have to mention the importance of domain "size" because this greatly influences the feasibility and effectiveness of different methods.
 
-There are two domains\cite{yan2016shall} in which a chatbot can operate in.
+There are two domains\cite{yan2016shall} between which a conversational agent operates:
 \begin{itemize}
-\item{\textbf{Closed domain}: The bot has one specific, well defined task it has to perform e.g. music player, restaurant finder. The advantage here is, that all the possible actions are finite and known in advance\cite{radlinski2017theoretical} (e.g. there is a finite number of Italian restaurants in a certain area). This means that it would for example be possible to model the agent as a set of states with transitions. Rule-based and probabilistic approaches are better suited/ most widely used in a closed domain.}
-\item{\textbf{Open domain}: The bot has no specific task. In the most extreme case it is completely open, which means that it has to converse with anyone about anything. This makes it impossible to model a set of possible answers beforehand. In this domain data-driven approaches are most widely used.}
+\item{\textbf{Closed domain}: The agent has one specific, well defined task it has to perform e.g. music player, restaurant finder. The advantage here is, that all the possible actions are finite and known in advance\cite{radlinski2017theoretical} (e.g. there is a finite number of Italian restaurants in a certain area). This means that it would for example be possible to model the agent as a set of states with transitions. Rule-based and probabilistic approaches are better suited/ most widely used in a closed domain.}
+\item{\textbf{Open domain}: The conversational agent has no specific task. In the most extreme case it is completely open, which means that it has to converse with anyone about anything. This kind of conversational agents are currently on the rise in the form of virtual private 	assistants (e.g. google assistant, amazon alexa etc.)\cite{klopfenstein2017rise}. With those kind of agents it is impossible to model a set of possible states beforehand. In this domain data-driven approaches are most widely used.}
 \end{itemize}
 
 \begin{figure}[H]
 \centering
    \includegraphics[width=\linewidth]{closedOpenDomainArrow.jpg}
-  \caption{Arrow representation of closed vs.open domain}
+  \caption{Arrow representation of closed vs. open domain}
   \label{fig:closedOpenDomainArrow}
 \end{figure}
 
 As \autoref{fig:closedOpenDomainArrow} shows, we have made the observation that for a closed domain the rule based methods work well and the more open the domain is - the harder it gets - the more deep learning is used.
 
-These are no hard borders, as most chatbots fill fall somewhere along this axis (e.g. Helpdesk ). But in general we can say that the task gets more difficult, the more open a domain is. For the closed domain we can easily use rule-based approaches and for open domain deep learning makes more sense. 
+These are no hard borders, as most conversational agents fall somewhere along this axis (e.g. a help desk agent. It is not operating in a completely closed domain, as it has to offer solutions for a broad set of problems). But in general we can say that the task gets more difficult, the more open a domain is. For the closed domain we can easily use rule-based approaches. For open domains deep learning makes more sense. 
 
 
 
@@ -543,10 +543,9 @@ In \autoref{fig:dialogFlowExample} we can see an example of a rule-based approac
 Of course this whole process is impossible in an open domain, because the possible set of conversation status is infinitely and we can not create an infinite amount of hand crafted rules to match it and the rules would fail to work for unexpected utterances\cite{wallace2009anatomy}.
 
 \subsection{Probabilistic approaches}
-One of the most common and most successful approaches in this field is using a partially observable markov decision process(POMDP)\cite{kaelbling1998planning}\cite{young2013pomdp} dialogue state model. The most successful is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden}\cite{young2010hidden}, which is based on POMDP.
+One of the most common and most successful approaches in this field is using a partially observable markov decision process (POMDP)\cite{kaelbling1998planning,young2013pomdp} dialogue state model. The most successful is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden,young2010hidden}, which is based on a POMDP.
 
 \subsubsection{POMDP}
-
 The partially observable decision process is described by the following:
 \begin{itemize}
 \item{a set of states $S=\left \{ s_{1},s_{2},....s_{|S|}  \right \}$}
@@ -566,11 +565,11 @@ The partially observable decision process is described by the following:
 \end{figure}
 
 
-Because state $s_{t}$ is not observable and thus is not known exactly, a distribution over all possible states is kept. This distribution is called the belief state. So the probability of being in state $s_{t}$, given the belief state \textbf{b} is b($s_{t}$)\cite{young2007hidden}. 
-Based on the current belief state \textbf{b} an action $a_{t}$ is selected and the system receives  a reward R and transitions to a new state $s'_{t}$, which is also unobserved. The system then receives an observation o' which depends on $s'_{t}$ and $a_{t}$. After this the belief b is updated\cite{young2007hidden,young2013pomdp}.
+Because the state $s_{t}$ is not observable and thus is not known exactly, a distribution over all possible states \emph{S} is kept. This distribution is called the belief state. So the probability of being in state $s_{t}$, given the belief state \textbf{b} is b($s_{t}$)\cite{young2007hidden}. 
+Based on the current belief state \textbf{b} an action $a_{t}$ is selected and the system receives  a reward R and transitions to a new state $s'_{t}$, which is also unobserved. The system then receives an observation o' which depends on $s'_{t}$ and $a_{t}$. After this the belief \textbf{b} is updated\cite{young2007hidden,young2013pomdp}.
 
 
-The HIS model refines the way the belief monitoring works. A N-best list of beliefs is kept. There is also always a "Rest" value kept in the N-best list (See \autoref{fig:dstChallengeProbabilistic})\cite{young2007hidden}.
+The HIS model refines the way the belief monitoring works. Only a N-best list of beliefs is kept. There is also always a "Rest" value kept in the N-best list (see \autoref{fig:dstChallengeProbabilistic})\cite{young2007hidden}.
 
 \begin{figure}[H]
 \centering
@@ -594,44 +593,39 @@ In \autoref{fig:pomdpVsConventional} we can see two different structures of a sp
 The conventional dialogue manager in part (a) only holds the estimate of one single state, whereas the probabilistic manager in part (b) represents a dialogue manager which maintains a distribution over all states and accepts an N-best list of alternative user inputs\cite{young2010hidden}.  
 
 \subsection{Data driven approaches}
-In a open domain it quickly becomes impossible to define all possible states and state transition. It is therefore not possible to handcraft a system which solves the context state tracking problem\cite{radlinski2017theoretical}.
+In a open domain it quickly becomes impossible to define all possible states and the corresponding transition matrix. It is therefore not possible to handcraft a system which solves the context state tracking problem\cite{radlinski2017theoretical}.
 
-But with the rise of big data and the large amount of conversations happening on the web, we can use data driven approaches to circumvent this problem. Instead of handcrafting a the mapping from context to response, we can learn this mapping from the data.
+But with the rise of big data and the large amount of conversations happening on the web, we can use data driven approaches to circumvent this problem. Instead of hand crafting a the mapping from context to response, we can learn this mapping from the data.
 
 In general there are two conrasting data driven approaches; \emph{Discriminative and Generative}. Most production systems today use the disctiminative approach, but the research focus is mostly on the generative approach. For both approaches there are statistical and deep learning methods available\cite{yan2016shall}.
 
 \subsubsection{Discriminative methods}
-The discriminative approach is to have a (very) large database of predefined responses and then pick the most appropriate one based on the context. This basicly reduces the task to a retreval problem akin to search engines (retreaving results based on a querry).
+The discriminative approach is to have a (very) large database of predefined responses and then pick the most appropriate one based on the context. This basically reduces the task to a retrieval problem akin to search engines (retrieving results based on a query).
 
 Most discriminative methods use the data to learn a ranking function. This function is then used to score all possoble responses. The best scoring response is given as an answer to the user.\cite{yan2016shall}
 
-This methods have the advantage that they do not make grammatical or semantical errors (because the predefined responses were weitten by humans). But they can't handle unseen cases or refer back to contextal entities (e.g. names).
+This methods have the advantage that they do not make grammatical or semantical errors (because the predefined responses were written by humans). But they can't handle unseen cases or refer back to contextual entities (e.g. names).
 
-An example for a statistical method ist \emph{Okapi BM25}\cite{manning2008introduction}. A search engine ranking function based on "bag-of-words" retreaval.
+An example for a statistical method ist \emph{Okapi BM25}\cite{manning2008introduction}. A search engine ranking function based on "bag-of-words" retrieval.
 
 Is is also possible to train an artificial neural network to score replies\cite{yan2016shall,kadlec2015improved}. This method is further explained in \autoref{model_architecture}, as we further investigate this method in our ablation study.
 
 \subsubsection{Generative methods}
 Generative methods do not use predefined responses. They generate new responses from scratch. To do this they use approaches from machine translation. But instead of translating form one language to another they translate from context to response.
 
-This has the benefit that it is possible to refer back to enteties in the imput. But these methods often makes grammatical mistakes and are hard to train. They tend to default to "save" answers like "I dont know" or even "I love you".\
+This has the benefit that it is possible to refer back to entities in the input. But these methods often makes grammatical mistakes and are hard to train. They tend to default to "save" answers like "I don't know" or even "I love you".\
 
 There are some methods from statistical machine translation, which basicly try to match the phrase probability distribution in both “languages”. But the research focus lies on deep learning methods like the RNN Encoder-Decoder Networt\cite{sutskever2014sequence}. It uses one network to encode the context into a vector and another to decode the network into the response.
 
 \begin{figure}[H]
 \centering
    \includegraphics[width=\linewidth]{sequence_to_sequence.png}
-  \caption{The Encoder-Decoder model form the sequence to sequence paper\cite{sutskever2014sequence}}
+  \caption{The dual encoder model form the sequence to sequence paper\cite{sutskever2014sequence}}
   \label{fig:dstChallengeProbabilistic}
 \end{figure}
 
 \section{Ablation Study}
-Handcrafted systems explictily model the context and the possible dialougue states. But with deep learning (neural network based) systems we just feed the network the whole context imformation (previous utterances) and ask it to produce an appropiate answer. We expect the network to implicitly model the dialogue states and keep track of the context. However it is not really possible to look into the network and understand how it makes its decisions. Therefore we can not be sure - or directly influence - to what extend the network accualy learns to use the context information.
-
-Our goal is to investigate this question with an ablation study. In nural network research ablation studies are often used to evaluate the importance of a feature by comparing the performance of the network with and without it.
-
-In our study we train the network with and without context information and then see how well it performs on a test set \emph{containing} context information. If both cases have similar performance we can deduce that the network does not learn to keep track of the context.
-
+\subsection{Goal}
 \subsection{Dataset}
 We use the \emph{Ubuntu Dialog Corpus}\cite{lowe2015ubuntu}. It is one of the largest public dialogue datasets available. It’s based on chat logs from the Ubuntu channels on a public IRC network.
 
@@ -644,13 +638,6 @@ The format of the testing data is slightly different from the training data. It 
 We use a model called \emph{Dual Encoder LSTM}\cite{lowe2015ubuntu}. It has been reported to achieve good accuracy for this dataset\cite{kadlec2015improved}. This model takes as input a context and a candidate response and outputs a score indicating how good this answer fits to the context.
 
 To do this it uses two recurrent neural networks (RNNs) - one for the context and one for the response - to encode the input into two vectors $c$ and $r$. These vectors should capture the meaning and all important information of the context and response.
-
-\begin{figure}[H]
-\centering
-   \includegraphics[width=\linewidth]{dualRNNnet.png}
-  \caption{The Dual Encoder LSTM used in our ablation study.}
-  \label{fig:EncoderDecoder}
-\end{figure}
 
 The context vector $c$ is then multiplied with a learned matrix $M$ to predict a response  $c^TM = r_p$.
 
@@ -665,11 +652,28 @@ To solve this we came up with the idea to instead add noise to the context. This
 
 We add noise by replacing every utterance in the context (except the last one) with a different utterance based on the probability $P$. 
 
-We generate ten training sets with $P$ form $0.0$ to $1.0$ and train one network on each 
-set. All ten resulting networks are evaluated on the same testing dataset.
+We generate ten training sets with $P$ form $0.0$ to $1.0$ and train one network on each set. All ten resulting networks are evaluated on the same testing dataset.
 
 \subsection{Results}
 
+\begin{figure}[H]
+\centering
+   \includegraphics[width=\linewidth]{accOverEpochs.pdf}
+  \caption{The Dual Encoder LSTM used in our ablation study.}
+  \label{fig:accOverEpochs}
+\end{figure}
+\begin{figure}[H]
+\centering
+   \includegraphics[width=\linewidth]{accOverNoiseP.pdf}
+  \caption{The Dual Encoder LSTM used in our ablation study.}
+  \label{fig:accOverNoiseP}
+\end{figure}
+
+\section{Conclusion}
+Overall we can say that probabilistic models are very well suited to keep track of the dialogue context in conversational agents that operate in a more closed domain. However with a more open domain, data driven approaches are better suited. 
+With the increasing amount of available data, those approaches become steadily more valid and more accurate.
+
+In our ablation study we found that it is important to train a neural network with context. If we remove the context from the training data, the accuracy decreases. \note{carl rephrase}
 
 
 
@@ -755,22 +759,6 @@ set. All ten resulting networks are evaluated on the same testing dataset.
 % exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
 % footnotes above bottom floats. This can be corrected via the \fnbelowfloat
 % command of the stfloats package.
-
-
-
-\section{Conclusion}
-The conclusion goes here.\cite{chopra2017my}
-
-
-
-
-% conference papers do not normally have an appendix
-
-
-% use section* for acknowledgement
-
-
-
 
 
 % trigger a \newpage just before the given reference
