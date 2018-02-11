@@ -609,7 +609,7 @@ This methods have the advantage that they do not make grammatical or semantical 
 
 An example for a statistical method ist \emph{Okapi BM25}\cite{manning2008introduction}. A search engine ranking function based on "bag-of-words" retreaval.
 
-Is is also possible to train an artificial neural network to score replies\cite{yan2016shall,lowe2015ubuntu}. This method is further explained in section \note{insert section}, as we further investigate this method in our ablation study.
+Is is also possible to train an artificial neural network to score replies\cite{yan2016shall,kadlec2015improved}. This method is further explained in \autoref{model_architecture}, as we further investigate this method in our ablation study.
 
 \subsubsection{Generative methods}
 Generative methods do not use predefined responses. They generate new responses from scratch. To do this they use approaches from machine translation. But instead of translating form one language to another they translate from context to response.
@@ -633,8 +633,32 @@ Our goal is to investigate this question with an ablation study. In nural networ
 In our study we train the network with and without context information and then see how well it performs on a test set \emph{containing} context information. If both cases have similar performance we can deduce that the network does not learn to keep track of the context.
 
 \subsection{Dataset}
+We use the \emph{Ubuntu Dialog Corpus}\cite{lowe2015ubuntu}. It is one of the largest public dialog datasets aviable. It’s based on chat logs from the Ubuntu channels on a public IRC network.
+
+The training data consists of one million examples, 50\% positive and 50\% negative. Each example consists of a context, the conversation up to this point, and an utterance, a response to the context. A positive label means that an utterance was an actual response to a context, and a negative label means that the utterance wasn’t – it was picked randomly from somewhere in the corpus.\cite{WILDML}
+
+The format of the testing data is slightly different from the training data. It consists of a context, a groud truth response and 9 distractor responses. The goal of the network ist to pick the ground trouth response from the distractors.
+
 \subsection{Model architecture}
+\label{model_architecture}
+We use a model called \emph{Dual Encoder LSTM}\cite{lowe2015ubuntu}. It has been reportet to achieve good accuracy for this dataset\cite{kadlec2015improved}. This model takes as input a context and a candidate response and outputs a score indicating how good this answer fits to the context.
+
+To do this it uses two recurrant neural networks (RNNs) - one for the context and one for the response - to encode the input into two vectors $c$ and $r$. These vectors should capture the meaning and all important information of the context and response.
+
+The context vector $c$ is then multiplied with a learned matrix $M$ to predict a response  $c^TM = r_p$.
+
+To calculate the score for the response we mesure the similarity between the predicted response $r_p$ and the candidate response $r$ by taking their dot product (and applying a sigmoid to convert it to a probability). A large dot product means the network thinks that the response is a good choice for that context.
+
+The network is trained with \emph{binary cross-entropy loss}.
+
 \subsection{Methology}
+Our original idea was to train two networks one with and one without context information (only the latest utterance). And then evaluate on the same testing dataset. But in this case the one without context information would receave a different kind of input while testing than during training. We know from experience that neural networks perform very poorly when they are faced with data that is not in the same format as the training data. Therefore the second netork would have surely performed worse, falsifying the results.
+
+To solve this we kame up with the idea to instead add noise to the context. This has the added benefit that we not only have the extreame case of \emph{with or without context} but also everything in between.
+
+We add noise by replacing every utterance in the context (exept the last one) with a different utterance based on the probability $P$. 
+
+
 \subsection{Results}
 
 
