@@ -410,8 +410,8 @@ Email: fuchsmat@students.unibe.ch}}
 
 \begin{abstract}
 %\boldmath
-Nowadays chatbots become more and more sophisticated conversationalists, due to recent advances in the field. Chatbots are especially popular in handling customer service tasks. However it is crucial for a bot to be able to keep the context of a conversation.
-In this paper we give an overview over the different ways of contexts, the current state of the art in context tracking and we test a nerual network approach in an experiment, using the ubuntu dataset \footnote{\url{http://dataset.cs.mcgill.ca/ubuntu-corpus-1.0/}}.
+Nowadays chatbots (in the following: conversational agent/ agent) become more and more sophisticated conversationalists, due to recent advances in the field. conversational agents are especially popular in handling customer service tasks. However it is crucial for an conversational agent to be able to keep the context of a conversation.
+In this paper we first give an overview over the different types of contexts and the current state of the art in context tracking. Finally we test a nerual network approach \note{carl do fancy formulierig} in an experiment, using the ubuntu dataset \footnote{\url{http://dataset.cs.mcgill.ca/ubuntu-corpus-1.0/}}. We train the network with a different amount of context in various runs and analyse the differences in recall.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -438,30 +438,36 @@ In this paper we give an overview over the different ways of contexts, the curre
 
 
 \section{Introduction}
-As the popularity of chatbots increases it becomes more important to increase their quality. This is why it is crucial for a chatbot to be able to keep track of the context. For example should the bot be able to know the nationality of the person using it or whether a person means his mother when saying "she" or his wife. 
-
-There are different types of context: The world knowledge(time, location, weather) , the user knowledge(relationships, preferences) and the dialogue context(Knowledge learned during the conversation), which is also called dialogue state. (\note{need citation here?}). In the following sections we give a brief overview over all those types. However our main focus will be on the dialogue context and the most common ways used to track it. 
-
-There are different approaches used for dialogue context: 
+As the popularity of conversational agents increases it becomes more important to increase their quality. This is why it is crucial for an agent to be able to keep track of the context. We split up the various forms of context\cite{chopra2017my,williams2013dialog} in three different types: 
 \begin{itemize}
-\item{Rule-based approaches}
-\item{Probabilistic approaches}
-\item{Data driven approaches}
+\item{The world knowledge (time, location, weather). Example: The agent should know the local time of the user, to be able to provide opening times of shops.}
+\item{The user knowledge (relationships, preferences). Example: The agent should know whether a person is referring to his mother or his wife, when he is using the word "she". }
+\item{The dialogue context or dialogue state tracking (Knowledge learned during the conversation)}.
 \end{itemize}
 
-Depending on which domain we are in, different approaches are more suited. There are two domains: 
-\begin{itemize}
-\item{Open domain}
-\item{Closed domain}
-\end{itemize}
+The main focus of this paper will be on keeping track of the dialogue context.
+
+Conversational agents operate on a spectrum between two different domains: \emph{Open domain} (No clear responsibility, open conversations) and \emph{Closed domain} (Specific task to fulfil, limited set of options). 
+Depending on which domain we are in, different approaches are more suited to use. The most common approaches we encountered are 
+\emph{Rule-based approaches}, \emph{Probabilistic approaches} and \emph{Data driven approaches}.
+
+In the following sections we are going to give a quick overview over the different types of context, the different domains of operation and the respective approaches used in those domains.
 
 \section{Types of context}
-\subsection{World knowledge and User knowledge}
-In order to be fully operable, a bot should always know the location, the time, the weather etc. of where the user is. Because what good is the chatbot if he only proposes restaurants that are in Australia, when the user is living in Switzerland? Or if the user asks about the local weather, he gets the weather in India. We called this knowledge "World knowledge".
-The bot should also know about the personal preferences, relationships, schedules etc. of the user. We called this knowledge "User knowledge".
-The cultural differences can also be huge. For example it has been found that Indians take a lot of time to articulate their intent and therefore prefer typing over talking\cite{chopra2017my}.
+\subsection{World knowledge}
+World knowledge is the knowledge which applies to all to all users in all conversations independently of the individual preferences. 
+This means things like  time, location, weather etc. should be considered. Because what good is the conversational agent if he only proposes restaurants that are in Australia, when the user is living in Switzerland? Or if the user asks about the local time, he gets a random time. 
 
-Hence it is of great importance for a conversational agent to take into account the surroundings of the user, in order to be able to give appropriate answers.
+
+The agent should also be aware of concepts. E.g. He should know what a gory movie means in order to be able to provide the user with an appropriate answer\cite{radlinski2017theoretical}.
+ 
+
+\subsection{User knowledge}
+The user knowledge is the knowledge which a conversational agent needs to have about the specific user in order to be able to answer a query. Like the world knowledge it is also tracked over all conversations. However it is specific to the user and is learned over the course of multiple conversations.
+E.g. the conversational agent should know the user's personal preferences, relationships, schedules etc. 
+
+
+The cultural differences can also be huge. For example it has been found that Indians take a lot of time to articulate their intent and therefore prefer typing over talking\cite{chopra2017my}.
 
 
 \subsection{Dialogue context}
