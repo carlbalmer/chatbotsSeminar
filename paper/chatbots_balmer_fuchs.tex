@@ -121,7 +121,7 @@
 
 
 
-
+\usepackage{subfig}
 \usepackage{xcolor}
 \newcommand\note[1]{\textcolor{red}{#1}}
 
@@ -411,7 +411,7 @@ Email: fuchsmat@students.unibe.ch}}
 \begin{abstract}
 %\boldmath
 Nowadays chatbots (in the following: conversational agent/ agent) become more and more sophisticated conversationalists, due to recent advances in the field. conversational agents are especially popular in handling customer service tasks. However it is crucial for an conversational agent to be able to keep the context of a conversation.
-In this paper we first give an overview over the different types of contexts and the current state of the art in context tracking. Finally we test a nerual network approach \note{carl do fancy formulierig} in an experiment, using the ubuntu dataset\cite{lowe2015ubuntu}. We train the network with a different amount of context in various runs and analyse the differences in accuracy.
+In this paper we first give an overview over the different types of contexts and the current state of the art in context tracking. Finally we perform an ablation study to investigate if neural networks do learn to use the context information given to them. Our experiments show that this is indeed the case.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -656,24 +656,56 @@ We generate ten training sets with $P$ form $0.0$ to $1.0$ and train one network
 
 \subsection{Results}
 
+Our results are summatised in \autoref{fig:accOverEpochs}, \autoref{fig:accOverNoiseP} and \autoref{tbl:noiseresults}. We observe a steady accuracy decline with rising noise. At first the difference is only small but with larger noise probability the accuracy drops drasticly. With these results it is save to say that the network accualy uses the context information to implycitly model the dialog state.
+
 \begin{figure}[H]
 \centering
    \includegraphics[width=\linewidth]{accOverEpochs.pdf}
-  \caption{The Dual Encoder LSTM used in our ablation study.}
+  \caption{Accuracy during training.}
   \label{fig:accOverEpochs}
 \end{figure}
 \begin{figure}[H]
 \centering
    \includegraphics[width=\linewidth]{accOverNoiseP.pdf}
-  \caption{The Dual Encoder LSTM used in our ablation study.}
+  \caption{Accuracy for different noising probabilies}
   \label{fig:accOverNoiseP}
 \end{figure}
+
+\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+\caption{Accuracy for different noising probabilies}
+\label{tbl:noiseresults}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+\centering
+\begin{tabular}{c|c}
+Noise probability & ACC\\
+\hline
+0.0 (Baseline) &	0.501\\			
+0.1 &	0.498\\
+0.2 &	0.491\\	
+0.3 &	0.486\\
+0.4 &	0.469\\
+0.5 &	0.461\\
+0.6 &	0.449\\
+0.7 &	0.421\\
+0.8 &	0.403\\
+0.9 &	0.356\\
+1.0 &	0.337\\
+\hline
+\end{tabular}
+\end{table}
+
 
 \section{Conclusion}
 Overall we can say that probabilistic models are very well suited to keep track of the dialogue context in conversational agents that operate in a more closed domain. However with a more open domain, data driven approaches are better suited. 
 With the increasing amount of available data, those approaches become steadily more valid and more accurate.
 
-In our ablation study we found that it is important to train a neural network with context. If we remove the context from the training data, the accuracy decreases. \note{carl rephrase}
+In our ablation study we found that removing (noising) the context from the training data does decrease the performance of the network. This shows that neural networks do indeed learn to implicitly model the dialog state and context.
 
 
 
@@ -733,24 +765,7 @@ In our ablation study we found that it is important to train a neural network wi
 % \footnotesize as IEEE normally uses this smaller font for tables.
 % The \label must come after \caption as always.
 %
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
+
 
 
 % Note that IEEE does not put floats in the very first column - or typically
