@@ -619,7 +619,12 @@ There are some methods from statistical machine translation, which basicly try t
 \end{figure}
 
 \section{Ablation Study}
-\subsection{Goal}
+Handcrafted systems explictily model the context and the possible dialougue states. But with deep learning (neural network based) systems we just feed the network the whole context imformation (previous utterances) and ask it to produce an appropiate answer. We expect the network to implicitly model the dialogue states and keep track of the context. However it is not really possible to look into the network and understand how it makes its decisions. Therefore we can not be sure - or directly influence - to what extend the network accualy learns to use the context information.
+
+Our goal is to investigate this question with an ablation study. In nural network research ablation studies are often used to evaluate the importance of a feature by comparing the performance of the network with and without it.
+
+In our study we train the network with and without context information and then see how well it performs on a test set \emph{containing} context information. If both cases have similar performance we can deduce that the network does not learn to keep track of the context.
+
 \subsection{Dataset}
 \subsection{Model architecture}
 \subsection{Methology}
