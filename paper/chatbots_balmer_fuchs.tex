@@ -410,7 +410,7 @@ Email: fuchsmat@students.unibe.ch}}
 
 \begin{abstract}
 %\boldmath
-Nowadays chatbots (in the following: conversational agent/ agent) become more and more sophisticated conversationalists, due to recent advances in the field. conversational agents are especially popular in handling customer service tasks. However it is crucial for an conversational agent to be able to keep the context of a conversation.
+Nowadays chatbots (in the following: conversational agent/ agent) become more and more sophisticated conversationalists, due to recent advances in the field. Conversational agents are especially popular in handling customer service tasks. However it is crucial for a conversational agent to be able to keep the context of a conversation.
 In this paper we first give an overview over the different types of contexts and the current state of the art in context tracking. Finally we perform an ablation study to investigate if neural networks do learn to use the context information given to them. Our experiments show that this is indeed the case.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
@@ -471,7 +471,7 @@ The cultural differences can also be huge. For example it has been found that In
 
 
 \subsection{Dialogue context}
-Dialogue context, also called dialogue state, represents the challenge of keeping track of the intent of the user and the knowledge learned during a specific the conversation. For example: 
+Dialogue context, also called dialogue state, represents the challenge of keeping track of the intent of the user and the knowledge learned during a specific conversation. For example: 
 
 \begin{itemize}
 \item[]{\textbf{U1:} Person: I would like to see the best Italian restaurant}
@@ -498,7 +498,7 @@ In this case the agent decides for the appropriate response based on \textbf{all
 If we look at the Problem of Dialogue State Tracking in a general case, we can formulate it like this:
 The agent takes as input all previous utterances by both parties and then decides based on this, what the most appropriate response is.
 At any given point in the conversation the user and the agent both can take multiple actions. 
-The user may state his Intent and/or give additional information (e.g. I want to ride the bus from $\rightarrow$ to). The agent can then reply by requesting additional information or presenting the user with a response and may ask for feedback
+The user may state his Intent and/or give additional information (e.g. I want to ride the bus from $\rightarrow$ to). The agent can then reply by requesting additional information or presenting the user with a response and may ask for feedback.
 
 The hard thing is to track all of the information and notice changes in the users intent, the information and to incorporate feedback.
 
@@ -540,13 +540,13 @@ The given input is always matched to \textbf{one} specific output state.
 
 In \autoref{fig:dialogFlowExample} we can see an example of a rule-based approach. How it works is, that if the user says something similar to "I want to hear more of them", then it recognizes the input context as "playing music" and it will start playing more music of the artist that is currently playing.
 
-Of course this whole process is impossible in an open domain, because the possible set of conversation status is infinitely and we can not create an infinite amount of hand crafted rules to match it and the rules would fail to work for unexpected utterances\cite{wallace2009anatomy}.
+Of course this whole process is impossible in an open domain, because the possible set of conversation states is infinite and we can not create an infinite amount of hand crafted rules to match it and the rules would fail to work for unexpected utterances\cite{wallace2009anatomy}.
 
 \subsection{Probabilistic approaches}
 One of the most common and most successful approaches in this field is using a partially observable markov decision process (POMDP)\cite{kaelbling1998planning,young2013pomdp} dialogue state model. The most successful is the hidden information state (HIS) approach to dialogue management\cite{young2007hidden,young2010hidden}, which is based on a POMDP.
 
 \subsubsection{POMDP}
-The partially observable decision process is described by the following:
+The partially observable markov decision process is described by the following:
 \begin{itemize}
 \item{a set of states $S=\left \{ s_{1},s_{2},....s_{|S|}  \right \}$}
 \item{a set of actions $A=\left \{ a_{1},a_{2},....a_{|A|}  \right \}$}
@@ -602,7 +602,7 @@ In general there are two conrasting data driven approaches; \emph{Discriminative
 \subsubsection{Discriminative methods}
 The discriminative approach is to have a (very) large database of predefined responses and then pick the most appropriate one based on the context. This basically reduces the task to a retrieval problem akin to search engines (retrieving results based on a query).
 
-Most discriminative methods use the data to learn a ranking function. This function is then used to score all possoble responses. The best scoring response is given as an answer to the user.\cite{yan2016shall}
+Most discriminative methods use the data to learn a ranking function. This function is then used to score all possible responses. The best scoring response is given as an answer to the user.\cite{yan2016shall}
 
 This methods have the advantage that they do not make grammatical or semantical errors (because the predefined responses were written by humans). But they can't handle unseen cases or refer back to contextual entities (e.g. names).
 
@@ -613,15 +613,14 @@ Is is also possible to train an artificial neural network to score replies\cite{
 \subsubsection{Generative methods}
 Generative methods do not use predefined responses. They generate new responses from scratch. To do this they use approaches from machine translation. But instead of translating form one language to another they translate from context to response.
 
-This has the benefit that it is possible to refer back to entities in the input. But these methods often makes grammatical mistakes and are hard to train. They tend to default to "save" answers like "I don't know" or even "I love you".\
+This has the benefit that it is possible to refer back to entities in the input. But these methods often make grammatical mistakes and are hard to train. They tend to default to "save" answers like "I don't know" or even "I love you".\
 
-There are some methods from statistical machine translation, which basicly try to match the phrase probability distribution in both “languages”. But the research focus lies on deep learning methods like the RNN Encoder-Decoder Networt\cite{sutskever2014sequence}. It uses one network to encode the context into a vector and another to decode the network into the response.
+There are some methods from statistical machine translation, which basicly try to match the phrase probability distribution in both “languages”. But the research focus lies on deep learning methods like the RNN Encoder-Decoder Network\cite{sutskever2014sequence}. It uses one network to encode the context into a vector and another to decode the network into the response.
 
 \begin{figure}[H]
 \centering
    \includegraphics[width=\linewidth]{sequence_to_sequence.png}
   \caption{The dual encoder model form the sequence to sequence paper\cite{sutskever2014sequence}}
-  \label{fig:dstChallengeProbabilistic}
 \end{figure}
 
 \section{Ablation Study}
@@ -646,7 +645,7 @@ To calculate the score for the response we measure the similarity between the pr
 The network is trained with \emph{binary cross-entropy loss}.
 
 \subsection{Methodology}
-Our original idea was to train two networks one with and one without context information (only the latest utterance). And then evaluate on the same testing dataset. But in this case the one without context information would receive a different kind of input while testing than during training. We know from experience that neural networks perform very poorly when they are faced with data that is not in the same format as the training data. Therefore the second network would have surely performed worse, falsifying the results.
+Our original idea was to train two networks. One with and one without context information (only the latest utterance). And then evaluate on the same testing dataset. But in this case the one without context information would receive a different kind of input while testing than during training. We know from experience that neural networks perform very poorly when they are faced with data that is not in the same format as the training data. Therefore the second network would have surely performed worse, falsifying the results.
 
 To solve this we came up with the idea to instead add noise to the context. This has the added benefit that we not only have the extreme case of \emph{with or without context} but also everything in between.
 
@@ -656,7 +655,7 @@ We generate ten training sets with $P$ form $0.0$ to $1.0$ and train one network
 
 \subsection{Results}
 
-Our results are summatised in \autoref{fig:accOverEpochs}, \autoref{fig:accOverNoiseP} and \autoref{tbl:noiseresults}. We observe a steady accuracy decline with rising noise. At first the difference is only small but with larger noise probability the accuracy drops drasticly. With these results it is save to say that the network accualy uses the context information to implycitly model the dialog state.
+Our results are summarised in \autoref{fig:accOverEpochs}, \autoref{fig:accOverNoiseP} and \autoref{tbl:noiseresults}. We observe a steady accuracy decline with rising noise. At first the difference is only small but with larger noise probability the accuracy drops drasticly. With these results it is save to say that the network actually uses the context information to implicitly model the dialogue state.
 
 \begin{figure}[H]
 \centering
@@ -705,7 +704,7 @@ Noise probability & ACC\\
 Overall we can say that probabilistic models are very well suited to keep track of the dialogue context in conversational agents that operate in a more closed domain. However with a more open domain, data driven approaches are better suited. 
 With the increasing amount of available data, those approaches become steadily more valid and more accurate.
 
-In our ablation study we found that removing (noising) the context from the training data does decrease the performance of the network. This shows that neural networks do indeed learn to implicitly model the dialog state and context.
+In our ablation study we found that removing (noising) the context from the training data does decrease the performance of the network. This shows that neural networks do indeed learn to implicitly model the dialogue state and context.
 
 
 
