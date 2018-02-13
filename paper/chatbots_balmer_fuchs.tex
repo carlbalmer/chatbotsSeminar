@@ -602,7 +602,7 @@ In general there are two conrasting data driven approaches; \emph{Discriminative
 \subsubsection{Discriminative methods}
 The discriminative approach is to have a (very) large database of predefined responses and then pick the most appropriate one based on the context. This basically reduces the task to a retrieval problem akin to search engines (retrieving results based on a query).
 
-Most discriminative methods use the data to learn a ranking function. This function is then used to score all possible responses. The best scoring response is given as an answer to the user.\cite{yan2016shall}
+Most discriminative methods use the data to learn a ranking function. This function is then used to score all possible responses. The best scoring response is given as an answer to the user\cite{yan2016shall}.
 
 This methods have the advantage that they do not make grammatical or semantical errors (because the predefined responses were written by humans). But they can't handle unseen cases or refer back to contextual entities (e.g. names).
 
@@ -628,7 +628,7 @@ There are some methods from statistical machine translation, which basicly try t
 \subsection{Dataset}
 We use the \emph{Ubuntu Dialog Corpus}\cite{lowe2015ubuntu}. It is one of the largest public dialogue datasets available. It’s based on chat logs from the Ubuntu channels on a public IRC network.
 
-The training data consists of one million examples, 50\% positive and 50\% negative. Each example consists of a context (the conversation up to this point) and an utterance (the response to the context). A positive label means that an utterance was an actual response to a context, and a negative label means that the utterance wasn’t – it was picked randomly from somewhere in the corpus.\cite{WILDML}
+The training data consists of one million examples, 50\% positive and 50\% negative. Each example consists of a context (the conversation up to this point) and an utterance (the response to the context). A positive label means that an utterance was an actual response to a context, and a negative label means that the utterance wasn’t – it was picked randomly from somewhere in the corpus\cite{WILDML}.
 
 The format of the testing data is slightly different from the training data. It consists of a context, a ground truth response and 9 distracting responses. The goal of the network is to pick the ground truth response from the distractors.
 
